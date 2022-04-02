@@ -1,4 +1,4 @@
-import  serial
+import serial
 import time
 
 def initConnection(port,baud):
@@ -23,11 +23,11 @@ def sendData(se,data,digits):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    ser=initConnection("COM4",9600)
+    ser=initConnection("COM5",9600)
     while True:
-        sendData(ser,[1,255],3)
+        sendData(ser,[1,255,152],3)
         time.sleep(5)
-        sendData(ser, [200, 2], 3)
+        sendData(ser, [200,152, 2], 3)
         time.sleep(5)
 
 
