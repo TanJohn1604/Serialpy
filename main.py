@@ -1,7 +1,9 @@
 import serial
 import time
-spilitdata=[0,0]
+spilitdata=[0,0,0]
 flag=1
+a=0
+b=0
 def initConnection(port,baud):
     try:
         ser=serial.Serial(port,baud)
@@ -28,24 +30,23 @@ def sendData(se,data,digits):
 if __name__ == '__main__':
     ser=initConnection("COM4",9600)
     while True:
-        if flag==0:
-            sendData(ser,[spilitdata[0],spilitdata[1]],3)
-        if flag==1:
-            while (ser.inWaiting() != 0):
-                data = ser.readline()
-                data = str(data, 'utf-8')
-                data = data.strip('\r\n')
-                spilitdata = data.split(",")
-                flag=0
-
-        # try:
-        # except:
-        #     print("read fail")
-        spilitdata[0] = int(spilitdata[0]) + 1
-        if(spilitdata[0]>990):
-            spilitdata[0]=0
+        # if flag==0:
+        #     sendData(ser,[spilitdata[0],spilitdata[1]],3)
+        a = a + 1
+        if a < 200:
+            b=1
+        if a > 200:
+            b=0
+        if a>400:
+            a=0
+        while (ser.inWaiting() != 0):
+            data = ser.readline()
+            data = str(data, 'utf-8')
+            data = data.strip('\r\n')
+            spilitdata = data.split(",")
+        sendData(ser, [b, 0,0], 3)
         print(spilitdata[0], spilitdata[1])
-        time.sleep(1)
+
 
 
 
